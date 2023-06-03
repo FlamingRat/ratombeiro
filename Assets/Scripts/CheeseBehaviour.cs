@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CheeseBehaviour : MonoBehaviour
-{
-    private AudioSource audioSource;
+public class CheeseBehaviour : MonoBehaviour {
+  private AudioSource audioSource;
 
-    void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
+  public void PlaySound() {
+    audioSource.Play();
+  }
 
-    public void PlaySound()
-    {
-        audioSource.Play();
-    }
+  private void Start() {
+    audioSource = GetComponent<AudioSource>();
+  }
 }
