@@ -1,0 +1,29 @@
+Coisas para fazer
+- Corrigir câmera
+- Melhorar UI
+- Tempo p/ o fogo morrer (HP)
+	- Indicador de vida 
+	- 5HP +1 per second
+	- Hosing = -2HP per second
+- Tempo p/ a árvore morrer? (HP)
+	- Indicador de vida 
+- Frases aleatórias de vitória/game over
+- Gráficos
+	- Fogo
+	- Água
+	- Solo
+	- ??? logo/ícone/splash
+- Tutorial
+- Som
+	- Água
+	- Fogo
+	- Passos
+	- Música
+	- Final de fase
+	- Game over
+- Controles mobile
+- Vida do player + queijos
+- Carga de água + hidrantes
+
+
+cinemachine
