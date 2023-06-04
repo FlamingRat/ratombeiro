@@ -110,13 +110,15 @@ public class PlayerBehaviour : MonoBehaviour {
       return;
     }
 
-    if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) && waterCurrentCapacitySeconds > 0f) {
+    var waterAvailable = waterCurrentCapacitySeconds > 0f;
+
+    var waterKeyDown = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
+    if (waterKeyDown && waterAvailable && !levelManager.gameOver && !levelManager.levelEnd) {
       waterObject.SetActive(true);
     }
 
-    var buttonReleased = (Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Space));
-    var isButtonPressed = (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0));
-    if (buttonReleased && !isButtonPressed || waterCurrentCapacitySeconds <= 0f) {
+    var waterKeysUp = (Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Space));
+    if (waterKeysUp && !waterKeyDown || !waterAvailable) {
       waterObject.SetActive(false);
     }
   }
