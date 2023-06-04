@@ -5,10 +5,12 @@ public class FireExtinguishSoundBehaviour : MonoBehaviour {
 
   void Update() {
     var fires = GameObject.FindGameObjectsWithTag("Fire");
-    if (fires.Length < fireCount) {
+    var fireSpirits = GameObject.FindGameObjectsWithTag("FireSpirit");
+    var newCount = fires.Length + fireSpirits.Length;
+    if (newCount < fireCount) {
       GetComponent<AudioSource>().Play();
     }
 
-    fireCount = fires.Length;
+    fireCount = fires.Length + fireSpirits.Length;
   }
 }

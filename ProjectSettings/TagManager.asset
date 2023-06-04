@@ -9,6 +9,7 @@ TagManager:
   - Water
   - Cheese
   - Boundary
+  - FireSpirit
   layers:
   - Default
   - TransparentFX

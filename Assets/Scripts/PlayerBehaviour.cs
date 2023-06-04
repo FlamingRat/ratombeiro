@@ -137,7 +137,7 @@ public class PlayerBehaviour : MonoBehaviour {
   }
 
   private void OnCollisionEnter2D(Collision2D collision) {
-    if (collision.gameObject.tag == "Fire") {
+    if (collision.gameObject.GetComponent<FireBehaviour>()) {
       fireDirection = gameObject.transform.position - collision.gameObject.transform.position;
       isOnFireCooldown = fireStunSeconds;
 

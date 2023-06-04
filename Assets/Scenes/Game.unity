@@ -1270,7 +1270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1169729695617405177, guid: 8372b608ee418894f9b527d009bc8cfd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: -8.5
       objectReference: {fileID: 0}
     - target: {fileID: 1169729695617405177, guid: 8372b608ee418894f9b527d009bc8cfd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3336,7 +3336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1169729695617405177, guid: 8372b608ee418894f9b527d009bc8cfd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 1169729695617405177, guid: 8372b608ee418894f9b527d009bc8cfd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4756,7 +4756,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1525c8cde56b4eb49b8d6e08bb3c4c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fire: {fileID: 5078328750615751682, guid: 0605e5252691ed648adc87b65616c1f0, type: 3}
+  wildFire: {fileID: 401873463845905126, guid: 33dbdf1ceaa3f6546b0ce8ebde27ca23, type: 3}
+  fireSpirit: {fileID: 1521013664861487595, guid: 05f8bf04a31274544bc1a674abbb4a55, type: 3}
   cheese: {fileID: 6729511765360752523, guid: f4496116f74c3764b9213fda7f473543, type: 3}
   levelManager: {fileID: 11400000, guid: 2d32e5acb50681c4f8cbb30e0c52511b, type: 2}
 --- !u!4 &1610101739

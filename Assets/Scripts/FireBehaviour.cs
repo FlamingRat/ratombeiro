@@ -7,13 +7,17 @@ public class FireBehaviour : MonoBehaviour {
   private float velocityX;
   private float velocityY;
 
-  private float maxFireHealth = 30f;
-  private float spreadHealth = 20f;
-  private float hp = 5f;
-  private bool hosingDown = false;
+  public float maxHP = 30f;
+  public float hp = 5f;
+  public float hpRegen = 1;
+  public bool hosingDown = false;
+  public Color baseColour = Color.white;
 
-  private int maxGenerations = 5;
-  private int generation = 1;
+  private float shakeFrequency = 0.075f;
+  private float damageShakeMin = 0.005f;
+  private float damageShakeMax = 0.02f;
+  private float lastShake = 0f;
+  private int shakeDir = 1;
 
   private Rigidbody2D rb;
   private SpriteRenderer sprite;
@@ -26,37 +30,15 @@ public class FireBehaviour : MonoBehaviour {
   private void Start() {
     velocityX = Random.value * (maxSpeed * 2) - maxSpeed;
     velocityY = Random.value * (maxSpeed * 2) - maxSpeed;
+    rb.AddForce(new Vector2(velocityX, velocityY) * 25);
 
-    rb.velocity = new Vector2(velocityX, velocityY);
-
-    spreadHealth = spreadHealth + ((maxFireHealth - spreadHealth) / (maxGenerations - 1)) * generation;
+    transform.localScale = new Vector3(1, 1, 1);
+    maxHP = levelManager.fireMaxHp;
+    hp = maxHP / 6;
+    hpRegen = hp / 5;
   }
-
-  public void SetGeneration(int gen) {
-    generation = gen;
-  }
-
-  void Spread() {
-    var fire1 = Instantiate(this, transform.position + new Vector3(0.25f, 0.25f, 0), transform.rotation);
-    var fire2 = Instantiate(this, transform.position + new Vector3(-0.25f, -0.25f, 0), transform.rotation);
-
-    fire1.SetGeneration(generation + 1);
-    fire2.SetGeneration(generation + 1);
-
-    Destroy(gameObject);
-  }
-
-  private float shakeFrequency = 0.075f;
-  private float damageShakeMin = 0.005f;
-  private float damageShakeMax = 0.02f;
-  private float lastShake = 0f;
-  private int shakeDir = 1;
 
   void Lifecycle() {
-    if (transform.position.x > 6 || transform.position.x < -6 || transform.position.y > 3 || transform.position.y < -3) {
-      Destroy(gameObject);
-    }
-
     if (hosingDown) {
       hp -= Time.deltaTime * levelManager.damage;
       sprite.color = new Color(0.8207547f, 0.4824313f, 0.127759f, 1);
@@ -69,14 +51,13 @@ public class FireBehaviour : MonoBehaviour {
       } else {
         lastShake -= Time.deltaTime;
       }
-    } else if (hp < maxFireHealth) {
-      hp += Time.deltaTime;
-      sprite.color = Color.white;
-    }
+    } else if (hp < maxHP) {
+      hp += Time.deltaTime * hpRegen;
 
-    if (hp >= spreadHealth && generation < maxGenerations) {
-      Spread();
-    } else if (hp <= 0) {
+      sprite.color = baseColour;
+    }
+    
+    if (hp <= 0) {
       Destroy(gameObject);
     }
   }
@@ -95,12 +76,6 @@ public class FireBehaviour : MonoBehaviour {
       Destroy(collision.gameObject);
       Instantiate(this, treePosition.position, Quaternion.identity);
     }
-
-    if (collision.gameObject.tag == "Boundary") {
-      var collisionSource = collision.gameObject.transform.position - gameObject.transform.position;
-
-      rb.velocity = new Vector2(collisionSource.x > 0 ? -maxSpeed : maxSpeed, collisionSource.y > 0 ? -maxSpeed : maxSpeed);
-    }
   }
 
   private void OnTriggerEnter2D(Collider2D collision) {
@@ -116,6 +91,14 @@ public class FireBehaviour : MonoBehaviour {
   }
 
   public float GetHPPercent() {
-    return hp / maxFireHealth;
+    return hp / maxHP;
+  }
+
+  public float GetHP() {
+    return hp;
+  }
+
+  public float GetMaxHP() {
+    return maxHP;
   }
 }
