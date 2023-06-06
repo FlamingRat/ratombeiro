@@ -8,14 +8,17 @@ public class GameLoop : MonoBehaviour {
   public GameObject upgradeUI;
 
   private bool hasUpgraded = false;
+  private float initialDamage = 5f;
+  private float initialSplashSizeMultiplier = 1f;
 
   void Start() {
     levelManager.levelEnd = false;
     levelManager.gameOver = false;
-    levelManager.fireMaxHp = 30 + Mathf.FloorToInt(levelManager.level / 4);
+    levelManager.fireMaxHp = 30 + Mathf.FloorToInt(levelManager.level / 3);
   }
 
   void Update() {
+
     var fires = GameObject.FindGameObjectsWithTag("Fire");
     var fireSpirits = GameObject.FindGameObjectsWithTag("FireSpirit");
     if (fires.Length == 0 && fireSpirits.Length == 0) {
@@ -47,6 +50,8 @@ public class GameLoop : MonoBehaviour {
   public void Restart() {
     ResumeGame();
     levelManager.level = 1;
+    levelManager.damage = initialDamage;
+    levelManager.splashSizeMultiplier = initialSplashSizeMultiplier;
     SceneManager.LoadScene(1);
   }
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -10,4 +11,5 @@ public class LevelManagerScriptableObject : ScriptableObject {
   public float fireMaxHp = 30f;
   public float fireStartingHpPercent = 16.6f;
   public float fireHpRegenPercent = 3.3f;
+  public float wildfireSpreadTime = 20f;
 }

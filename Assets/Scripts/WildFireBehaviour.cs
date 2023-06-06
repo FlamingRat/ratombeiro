@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WildFireBehaviour : MonoBehaviour {
-  private float timeToSpreadSeconds = 15f;
-  private int maxOrganicGenerations = 5;
+  public LevelManagerScriptableObject levelManager;
+
+  private float timeToSpreadSeconds;
+  private int maxOrganicGenerations = 4;
   private int generation = 1;
 
   private Rigidbody2D rb;
@@ -14,31 +16,34 @@ public class WildFireBehaviour : MonoBehaviour {
     rb = GetComponent<Rigidbody2D>();
     fire = GetComponent<FireBehaviour>();
     fire.baseColour = Color.white;
+    timeToSpreadSeconds = levelManager.wildfireSpreadTime;
   }
 
   void Update() {
-    if (timeToSpreadSeconds <= 0f) {
+    if (timeToSpreadSeconds <= 0f && generation < maxOrganicGenerations) {
       Spread();
+      timeToSpreadSeconds = levelManager.wildfireSpreadTime;
     }
     timeToSpreadSeconds -= Time.deltaTime;
   }
-  public void SetInitialValues(int gen, float hp, Vector2 velocity) {
+  public void SetInitialValues(int gen, float hp) {
     generation = gen;
     fire.hp = hp;
-    rb.velocity = velocity;
   }
 
   void Spread() {
-    if (generation >= maxOrganicGenerations) return;
-
-    timeToSpreadSeconds = 15f;
-
     var fire1 = Instantiate(this, transform.position, transform.rotation);
     var fire2 = Instantiate(this, transform.position, transform.rotation);
 
-    fire1.SetInitialValues(generation + 1, fire.hp * 0.75f, rb.velocity);
-    fire2.SetInitialValues(generation + 1, fire.hp * 0.75f, rb.velocity * new Vector2(-1, -1));
+    fire1.SetInitialValues(generation + 1, fire.hp * 0.75f);
+    fire2.SetInitialValues(generation + 1, fire.hp * 0.75f);
 
     Destroy(gameObject);
+  }
+
+  private void OnCollisionEnter2D(Collision2D collision) {
+    if (collision.gameObject.tag == "Tree") {
+      Spread();
+    }
   }
 }
