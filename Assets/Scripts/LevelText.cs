@@ -6,6 +6,6 @@ public class LevelText : MonoBehaviour {
 
   void Update() {
     var text = GetComponent<TextMeshProUGUI>();
-    text.SetText("Nível: " + levelManager.level);
+    text.SetText(levelManager.level.ToString());
   }
 }

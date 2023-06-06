@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameLoop : MonoBehaviour {
   public LevelManagerScriptableObject levelManager;
   public GameObject nextLevelUI;
+  public GameObject nextLevelBtn;
   public GameObject gameOverUI;
   public GameObject upgradeUI;
 
@@ -24,7 +25,9 @@ public class GameLoop : MonoBehaviour {
     if (fires.Length == 0 && fireSpirits.Length == 0) {
       levelManager.levelEnd = true;
       nextLevelUI.SetActive(true);
-      if (!hasUpgraded) upgradeUI.SetActive(true);
+
+      upgradeUI.SetActive(!hasUpgraded);
+      nextLevelBtn.SetActive(hasUpgraded);
     }
 
     var trees = GameObject.FindGameObjectsWithTag("Tree");
@@ -57,13 +60,11 @@ public class GameLoop : MonoBehaviour {
 
   public void UpgradeDamage() {
     levelManager.damage += .5f;
-    upgradeUI.SetActive(false);
     hasUpgraded = true;
   }
 
   public void UpgradeSplash() {
     levelManager.splashSizeMultiplier += .05f;
-    upgradeUI.SetActive(false);
     hasUpgraded = true;
   }
 }

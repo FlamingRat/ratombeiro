@@ -7,6 +7,6 @@ public class DPSText : MonoBehaviour {
   private void Update() {
     var text = GetComponent<TextMeshProUGUI>();
     float dps = Mathf.Ceil(levelManager.damage * 10f) / 10f;
-    text.text = "DPS: " + dps;
+    text.SetText(dps.ToString());
   }
 }
