@@ -21,7 +21,7 @@ public class WildFireBehaviour : MonoBehaviour {
 
   void Update() {
     if (timeToSpreadSeconds <= 0f && generation < maxOrganicGenerations) {
-      Spread();
+      Spread(transform.position - new Vector3(0.5f, 0.5f, 0));
       timeToSpreadSeconds = levelManager.wildfireSpreadTime;
     }
     timeToSpreadSeconds -= Time.deltaTime;
@@ -31,19 +31,17 @@ public class WildFireBehaviour : MonoBehaviour {
     fire.hp = hp;
   }
 
-  void Spread() {
-    var fire1 = Instantiate(this, transform.position, transform.rotation);
-    var fire2 = Instantiate(this, transform.position, transform.rotation);
+  void Spread(Vector3 firePosition) {
+    var newFire = Instantiate(this, firePosition, Quaternion.identity);
+    newFire.SetInitialValues(generation + 1, fire.hp * 0.75f);
 
-    fire1.SetInitialValues(generation + 1, fire.hp * 0.75f);
-    fire2.SetInitialValues(generation + 1, fire.hp * 0.75f);
-
-    Destroy(gameObject);
+    fire.hp *= 0.75f;
+    generation += 1;
   }
 
   private void OnCollisionEnter2D(Collision2D collision) {
     if (collision.gameObject.tag == "Tree") {
-      Spread();
+      Spread(collision.transform.position);
     }
   }
 }
