@@ -19,6 +19,7 @@ public class FireBehaviour : MonoBehaviour {
 
   public float moveSpeed = 0.25f;
   private float movementForce = 100f;
+  private float minSpeed;
 
   private Rigidbody2D rb;
   private Collider2D col;
@@ -61,6 +62,7 @@ public class FireBehaviour : MonoBehaviour {
   public void ChooseMovement() {
     var velocityX = Random.value * (moveSpeed * 2) - moveSpeed;
     var velocityY = Random.value * (moveSpeed * 2) - moveSpeed;
+    minSpeed = Mathf.Min(Mathf.Abs(velocityX), Mathf.Abs(velocityY));
     rb.velocity = new Vector2(velocityX, velocityY);
   }
 
@@ -86,10 +88,24 @@ public class FireBehaviour : MonoBehaviour {
 
       sprite.color = baseColour;
     }
-    
+
     if (hp <= 0) {
       Destroy(gameObject);
     }
+  }
+
+  void ForceMinSpeed() {
+    if (rb.velocity.x < minSpeed && rb.velocity.x > -minSpeed) {
+      rb.velocity = new Vector2(minSpeed, rb.velocity.y);
+    }
+
+    if (rb.velocity.y < minSpeed && rb.velocity.y > -minSpeed) {
+      rb.velocity = new Vector2(rb.velocity.x, minSpeed);
+    }
+  }
+
+  void ForceMaxSpeed() {
+    rb.velocity = new Vector2(Mathf.Min(moveSpeed, Mathf.Max(-moveSpeed, rb.velocity.x)), Mathf.Min(moveSpeed, Mathf.Max(-moveSpeed, rb.velocity.y)));
   }
 
   void Update() {
@@ -97,7 +113,8 @@ public class FireBehaviour : MonoBehaviour {
 
     if (levelManager.levelEnd || levelManager.gameOver) return;
 
-    rb.velocity = new Vector2(Mathf.Min(moveSpeed, Mathf.Max(-moveSpeed, rb.velocity.x)), Mathf.Min(moveSpeed, Mathf.Max(-moveSpeed, rb.velocity.y)));
+    ForceMaxSpeed();
+    ForceMinSpeed();
 
     Lifecycle();
   }
