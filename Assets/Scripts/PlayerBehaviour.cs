@@ -6,6 +6,7 @@ public class PlayerBehaviour : MonoBehaviour {
   public GameObject stepSoundObject;
   public GameObject sprintSoundObject;
   public CheeseBehaviour cheeseSoundObject;
+  public PauseBehaviour pauseButton;
 
   private Rigidbody2D rb;
   private Vector2 fireDirection = new Vector2(0, 0);
@@ -124,6 +125,11 @@ public class PlayerBehaviour : MonoBehaviour {
   }
 
   void Update() {
+    if (pauseButton.isPaused) {
+      waterObject.SetActive(false);
+      return;
+    }
+
     MovePlayer();
     FaceCursor();
 

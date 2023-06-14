@@ -16,8 +16,8 @@ MonoBehaviour:
   levelEnd: 0
   gameOver: 0
   splashSizeMultiplier: 1
-  damage: 6.5
-  fireMaxHp: 31
+  damage: 5
+  fireMaxHp: 30
   fireStartingHpPercent: 16.6
   fireHpRegenPercent: 3.3
   wildfireSpreadTime: 20
